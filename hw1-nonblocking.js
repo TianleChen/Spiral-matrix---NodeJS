@@ -76,12 +76,20 @@ function upload(response, postData) {
 	var num_text = querystring.parse(postData).text;
 	var num = Number(num_text);
 	var sptable = creatTable(num);
+
+	response.writeHead(200, {"Content-Type": "text/html"});
 	var i, j;
+	response.write('<html><head></head><body><table border="1">')
 	for (i = 0; i < num; i++) {
+		if(i%2){
+			response.write('<tr bgcolor="#EEE">');
+		}
 		for (j = 0; j < num; j++) {
-			response.write(sptable[i][j] + " ");		
+			response.write('<td>' + sptable[i][j] + " " + '</td>');
 		};
+		response.write('</tr>');
 	};
+	response.write('</table><br><form action="/"><button>Back</button></form></body></html>');
 	response.end();
 }
 
